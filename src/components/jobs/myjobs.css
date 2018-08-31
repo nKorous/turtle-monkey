@@ -1,0 +1,6 @@
+.jobCard {
+    margin: 2px;
+    width: 98%;
+    border: 3px groove black;
+    border-radius: 2px;
+}

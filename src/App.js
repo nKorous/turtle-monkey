@@ -4,25 +4,15 @@ import logo from "./logo.svg";
 import "./App.css";
 import Reports from "./components/reports.js"
 import Landing from './components/landing.js'
-import axios from 'axios'
 
 
 class App extends Component {
-  state = {
-    users: []
-  }
+  constructor(props) { //The constructor handles State. when state changes, it kicks off a re-render
+    super(props)
+    this.state = {
+      users: []
+    }
 
-  async getUsers(){
-    axios.get(`https://monkey-turtle.herokuapp.com/dbTest`)
-      .then((data) => {
-        data.data.forEach((records) => {
-          this.state.users.push({records})
-        })
-      })
-  }
-
-  componentDidMount(){
-    this.getUsers()
   }
 
   render() {
@@ -34,8 +24,6 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <div>
-          Users: <br/>
-
         </div>
         <Router>
           <Switch>
