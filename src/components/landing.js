@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './landing.css'
 import MyJobs from '../components/jobs/myjobs.js'
-import * as moment from 'moment'
 import * as dateFormat from 'dateformat'
 
 

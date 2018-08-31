@@ -4,6 +4,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Reports from "./components/reports.js"
 import Landing from './components/landing.js'
+import AdministrationHome from './components/administration/administration-home.js'
 
 
 class App extends Component {
@@ -29,6 +30,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/' component={Landing}/>
             <Route path='/reports' component={Reports}/>
+            <Route path='/administration' component={AdministrationHome} />
           </Switch>
         </Router>
       </div>
