@@ -1,0 +1,8 @@
+.userList {
+    border: 3px solid black;
+    border-radius: 2px;
+    height: 500px;
+    width: 700px;
+    background-color: whitesmoke;
+    color: black
+}

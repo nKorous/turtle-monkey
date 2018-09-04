@@ -1,48 +1,61 @@
 import React, { Component } from "react";
 import "./administration-home.css";
 import Users from "./users.js";
+import * as dateFormat from 'dateformat'
 
 class AdministrationHome extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
 
-      this.state = {
-        users: []
-      }
+    this.state = {
+      users: []
+    };
 
-      this.getUsers = this.getUsers.bind(this)
-      this.listUsers = this.listUsers.bind(this)
+    this.getUsers = this.getUsers.bind(this);
+    this.listUsers = this.listUsers.bind(this);
+    this.nextID = this.nextID.bind(this)
   }
 
-  componentWillMount(){
-    this.getUsers(`http://localhost:9000/dbTest`)
+  componentWillMount() {
+    this.getUsers(`http://localhost:9000/dbTest`);
   }
-  
-  getUsers(endpoint){
+
+  getUsers(endpoint) {
     fetch(endpoint)
       .then(result => result.json())
-      .then(result => 
-        result.forEach((data) => {
-          this.state.users.push(data)
+      .then(json => json.forEach(data => {
+          this.setState(prevState => ({
+            users: [
+              ...prevState.users,
+              {
+                ID: this.nextID(),
+                username: data.username,
+                seceretword: data.seceretword,
+                isactive: data.isactive,
+                recorddate: dateFormat(data.recorddate, 'yyyy-mm-dd')
+              }
+            ]
+          }))
         }))
   }
 
+  nextID(){
+    this.uniqueId = this.uniqueId || 0
+    return this.uniqueId++
+  }
 
-  listUsers(listdata){
+  listUsers(users) {
     return (
-      <Users>
-        <li key={listdata.userid} index={listdata.userid}> 
+      <Users key={users.ID}>
+        <p>Name: {users.username}</p>
           <ul>
-            <li>Name: {listdata.username}</li>
-              <ul>
-                <li>Seceret: {listdata.seceretword}</li>
-                <li>Active: <input type='checkbox' defaultChecked={listdata.isactive} /></li>
-                <li>Member Since: {listdata.recorddate}</li>
-              </ul>
+            <li>Seceret: {users.seceretword}</li>
+            <li>Active: <input type='checkbox' defaultChecked={users.isactive} /></li>
+            <li>Member Since: {users.recorddate}</li>
           </ul>
-      </li>
       </Users>
-    )
+
+    );
   }
 
   render() {
@@ -50,10 +63,9 @@ class AdministrationHome extends Component {
       <div>
         <h1>Administration</h1>
 
-        <ul>
+        <div className="userList">
           {this.state.users.map(this.listUsers)}
-        </ul>
-
+        </div>
       </div>
     );
   }
